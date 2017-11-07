@@ -36,6 +36,8 @@ do
 	echo "$Iteration,$TestType,$BlockSize,$Threads,$Jobs,$TotalIOPS,$ReadIOPS,$MaxOfReadMeanLatency,$ReadMaxLatency,$ReadBw,$WriteIOPS,$MaxOfWriteMeanLatency,$WriteMaxLatency,$WriteBw" >> $csv_file_tmp
 	((count++))
 done
+cat $csv_file_tmp | sort -n >temp.txt
+mv temp.txt $csv_file_tmp
 
 echo ",Max IOPS of each mode," >> $csv_file
 echo ",Test Mode,Max IOPS (BSize-iodepth)," >> $csv_file
