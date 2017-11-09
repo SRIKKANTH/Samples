@@ -8,7 +8,7 @@ csv_file_tmp=output_tmp.csv
 echo $file_name
 echo $csv_file
 
-echo "Iteration,TestType,BlockSize,iodepth,Jobs,TotalIOPS,ReadIOPS,MaxOfReadMeanLatency,ReadMaxLatency,ReadBw,WriteIOPS,MaxOfWriteMeanLatency,WriteMaxLatency,WriteBw" > $csv_file_tmp
+echo "" > $csv_file_tmp
 
 json_list=(`ls *.json`)
 count=0
@@ -36,7 +36,8 @@ do
 	echo "$Iteration,$TestType,$BlockSize,$Threads,$Jobs,$TotalIOPS,$ReadIOPS,$MaxOfReadMeanLatency,$ReadMaxLatency,$ReadBw,$WriteIOPS,$MaxOfWriteMeanLatency,$WriteMaxLatency,$WriteBw" >> $csv_file_tmp
 	((count++))
 done
-cat $csv_file_tmp | sort -n >temp.txt
+
+cat $csv_file_tmp | sort -n | grep -v "^$" > temp.txt
 mv temp.txt $csv_file_tmp
 
 echo ",Max IOPS of each mode," >> $csv_file
@@ -57,7 +58,7 @@ echo "" >> $csv_file
 echo ",Max IOPS of each BlockSize," >> $csv_file
 modes='randread randwrite read write'
 block_sizes='1K 2K 4K 8K 16K 32K 64K 128K 256K 512K 1024K 2048K'
-echo ",Test Mode,Block Size,,,Max IOPS (BSize-iodepth)," >> $csv_file
+echo ",Test Mode,Block Size,iodepth,Max IOPS (BSize-iodepth)," >> $csv_file
 for testmode in $modes 
 do
 	for block in $block_sizes 
@@ -74,6 +75,7 @@ do
 	done
 done
 echo "" >> $csv_file
+echo "Iteration,TestType,BlockSize,Threads,Jobs,TotalIOPS,ReadIOPS,MaxOfReadMeanLatency,ReadMaxLatency,ReadBw,WriteIOPS,MaxOfWriteMeanLatency,WriteMaxLatency,WriteBw" >> $csv_file
 cat $csv_file_tmp >> $csv_file
 rm -rf $csv_file_tmp
 echo "Parsing completed!" 
