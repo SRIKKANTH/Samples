@@ -71,7 +71,7 @@ echo "" >> $csv_file
 echo ",Max IOPS of each BlockSize," >> $csv_file
 modes='randread randwrite read write'
 block_sizes='1K 2K 4K 8K 16K 32K 64K 128K 256K 512K 1024K 2048K'
-echo ",Test Mode,Block Size,iodepth,Max IOPS (BSize-iodepth)," >> $csv_file
+echo ",Test Mode,Block Size,,,Max IOPS (BSize-iodepth)," >> $csv_file
 for testmode in $modes 
 do
 	for block in $block_sizes 
