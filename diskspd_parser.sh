@@ -1,6 +1,8 @@
 csv_file=$1
 csv_file_tmp=output_tmp.csv
-
+csplit ioresults.log '/^-- iteration/' '{*}'
+rm -rf xx00
+head xx01
 echo $csv_file
 dos2unix x* 2> /dev/null
 
